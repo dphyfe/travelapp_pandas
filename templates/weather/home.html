@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Pandas Weather Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background: #f7f7f9;
+            color: #333;
+        }
+
+        main {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
+        }
+
+        h1 {
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 0.75rem 1.5rem;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        .card {
+            background: #f1f5f9;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .table-striped tbody tr:nth-child(odd) {
+            background: #f8fafc;
+        }
+
+        .table td,
+        .table th {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .message {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.25rem;
+        }
+
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+
+<body>
+    <main>
+        <h1>Pandas Weather Dashboard</h1>
+
+        {% if messages %}
+        {% for message in messages %}
+        <div class="message {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+        {% endif %}
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.city }}
+            <button type="submit">Fetch weather</button>
+        </form>
+
+        {% if report %}
+        <section class="card">
+            <h2>{{ report.city }}</h2>
+            <p><strong>Observed (UTC):</strong> {{ report.observed|date:"Y-m-d H:i" }}</p>
+            <p><strong>Conditions:</strong> {{ report.description }}</p>
+            <p><strong>Temp / Feels Like (°C):</strong> {{ report.temperature_c|floatformat:1 }} / {{ report.feels_like_c|floatformat:1 }}</p>
+            <p><strong>Humidity (%):</strong> {{ report.humidity_pct|floatformat:0 }}</p>
+            <p><strong>Wind (km/h):</strong> {{ report.wind_kmph|floatformat:0 }}</p>
+            {% if report.forecasts %}
+            <h3>Forecast snapshots</h3>
+            <ul>
+                {% for forecast in report.forecasts %}
+                <li>
+                    {{ forecast.timestamp_utc|date:"Y-m-d" }} — {{ forecast.description }} —
+                    Temp {{ forecast.temperature_c|floatformat:1 }}°C, Humidity {{ forecast.humidity_pct|floatformat:0 }}%
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </section>
+        {% else %}
+        <p>Enter a city to fetch the latest conditions and forecast.</p>
+        {% endif %}
+
+        {% if history_html %}
+        <section>
+            <h2>Recent history</h2>
+            {{ history_html|safe }}
+        </section>
+        {% endif %}
+    </main>
+</body>
+
+</html>

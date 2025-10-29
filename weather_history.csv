@@ -1,0 +1,5 @@
+city,timestamp_utc,source,description,temperature_C,feels_like_C,humidity_pct,wind_kmph
+London,2025-10-29T12:00:00Z,forecast,Overcast ,13.0,12.0,70.0,12.0
+London,2025-10-29T16:39:10Z,current,Partly cloudy,10.0,9.0,94.0,11.0
+London,2025-10-30T12:00:00Z,forecast,Cloudy ,12.0,11.0,64.0,12.0
+London,2025-10-31T12:00:00Z,forecast,Partly Cloudy ,15.0,15.0,74.0,20.0
