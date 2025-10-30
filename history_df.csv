@@ -1,0 +1,19 @@
+city,timestamp_utc,source,description,temperature_C,feels_like_C,humidity_pct,wind_kmph
+London,2025-10-30 12:00:00+00:00,forecast,Cloudy ,12.0,11.0,64.0,12.0
+New york,2025-10-30 12:00:00+00:00,forecast,Overcast ,10.0,8.0,85.0,36.0
+atlanta,2025-10-30 12:00:00+00:00,forecast,Overcast,12.0,7.0,77.0,17.0
+rome,2025-10-30 12:00:00+00:00,forecast,Cloudy ,21.0,21.0,63.0,22.0
+London,2025-10-30 16:35:10+00:00,current,Partly cloudy,13.0,12.0,67.0,16.0
+New york,2025-10-30 16:41:17+00:00,current,Heavy rain,13.0,10.0,100.0,36.0
+atlanta,2025-10-30 16:41:38+00:00,current,Overcast,12.0,10.0,77.0,17.0
+atlanta,2025-10-30 16:44:54+00:00,current,Overcast,12.0,10.0,77.0,17.0
+rome,2025-10-30 16:48:49+00:00,current,Cloudy,20.0,20.0,67.0,14.0
+rome,2025-10-30 17:06:09+00:00,current,Partly cloudy,20.0,20.0,78.0,11.0
+New york,2025-10-31 12:00:00+00:00,forecast,Overcast ,12.0,10.0,70.0,32.0
+London,2025-10-31 12:00:00+00:00,forecast,Partly Cloudy ,15.0,15.0,74.0,20.0
+rome,2025-10-31 12:00:00+00:00,forecast,Sunny,22.0,25.0,53.0,6.0
+atlanta,2025-10-31 12:00:00+00:00,forecast,Partly Cloudy ,10.0,8.0,64.0,15.0
+London,2025-11-01 12:00:00+00:00,forecast,Partly Cloudy ,13.0,11.0,63.0,23.0
+New york,2025-11-01 12:00:00+00:00,forecast,Partly Cloudy ,13.0,11.0,44.0,26.0
+atlanta,2025-11-01 12:00:00+00:00,forecast,Sunny,16.0,16.0,41.0,4.0
+rome,2025-11-01 12:00:00+00:00,forecast,Sunny,23.0,25.0,53.0,5.0

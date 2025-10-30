@@ -29,6 +29,7 @@ class ForecastSnapshot:
     timestamp_utc: datetime
     description: str
     temperature_c: float
+    temperature_f: float
     humidity_pct: float
 
 
@@ -38,7 +39,9 @@ class WeatherReport:
     observed: datetime
     description: str
     temperature_c: float
+    temperature_f: float
     feels_like_c: float
+    feels_like_f: float
     humidity_pct: float
     wind_kmph: float
     forecasts: list[ForecastSnapshot]
@@ -46,6 +49,12 @@ class WeatherReport:
 
 def _history_path() -> Path:
     return Path(getattr(settings, "WEATHER_HISTORY_PATH", Path(settings.BASE_DIR) / "weather_history.csv"))
+
+
+def _c_to_f(value: float) -> float:
+    if pd.isna(value):
+        return value
+    return (float(value) * 9 / 5) + 32
 
 
 def fetch_weather_payload(city: str) -> dict:
@@ -95,7 +104,20 @@ def normalize_weather(city: str, payload: dict) -> pd.DataFrame:
 def load_history(history_path: Path | None = None) -> pd.DataFrame:
     target = history_path or _history_path()
     if target.exists():
-        return pd.read_csv(target, parse_dates=["timestamp_utc"], dtype={"city": "string"})
+        df = pd.read_csv(target, dtype={"city": "string"})
+
+        if "timestamp_utc" not in df.columns:
+            return pd.DataFrame(columns=HISTORY_COLUMNS)
+
+        missing_columns = [column for column in HISTORY_COLUMNS if column not in df.columns]
+        for column in missing_columns:
+            df[column] = pd.NA
+
+        df = df.reindex(columns=HISTORY_COLUMNS)
+        df["timestamp_utc"] = pd.to_datetime(df["timestamp_utc"], utc=True, errors="coerce")
+        df["city"] = df["city"].astype("string")
+        df["source"] = df["source"].astype("category")
+        return df
     return pd.DataFrame(columns=HISTORY_COLUMNS)
 
 
@@ -122,6 +144,7 @@ def build_report(df: pd.DataFrame) -> WeatherReport:
             timestamp_utc=row.timestamp_utc,
             description=row.description,
             temperature_c=float(row.temperature_C),
+            temperature_f=_c_to_f(float(row.temperature_C)),
             humidity_pct=float(row.humidity_pct),
         )
         for row in forecast_rows.itertuples(index=False)
@@ -131,7 +154,9 @@ def build_report(df: pd.DataFrame) -> WeatherReport:
         observed=current_row.timestamp_utc,
         description=str(current_row.description),
         temperature_c=float(current_row.temperature_C),
+        temperature_f=_c_to_f(float(current_row.temperature_C)),
         feels_like_c=float(current_row.feels_like_C),
+        feels_like_f=_c_to_f(float(current_row.feels_like_C)),
         humidity_pct=float(current_row.humidity_pct),
         wind_kmph=float(current_row.wind_kmph),
         forecasts=sorted(forecasts, key=lambda snap: snap.timestamp_utc),
@@ -142,20 +167,25 @@ def format_report_lines(report: WeatherReport) -> Iterable[str]:
     yield f"City: {report.city}"
     yield f"Observed (UTC): {report.observed:%Y-%m-%d %H:%M}"
     yield f"Conditions: {report.description}"
-    yield (f"Temp / Feels Like (°C): {report.temperature_c:.1f} / {report.feels_like_c:.1f}")
+    yield (f"Temp / Feels Like: {report.temperature_c:.1f}°C ({report.temperature_f:.1f}°F) / {report.feels_like_c:.1f}°C ({report.feels_like_f:.1f}°F)")
     yield f"Humidity (%): {report.humidity_pct:.0f}"
     yield f"Wind (km/h): {report.wind_kmph:.0f}"
     yield "Forecast snapshots:"
     for forecast in report.forecasts:
-        yield (f"  {forecast.timestamp_utc:%Y-%m-%d} — {forecast.description} — Temp {forecast.temperature_c:.1f}°C, Humidity {forecast.humidity_pct:.0f}%")
+        yield (f"  {forecast.timestamp_utc:%Y-%m-%d} — {forecast.description} — Temp {forecast.temperature_c:.1f}°C ({forecast.temperature_f:.1f}°F), Humidity {forecast.humidity_pct:.0f}%")
 
 
 def dataframe_tail_html(df: pd.DataFrame, limit: int | None = None) -> str | None:
     if df.empty:
         return None
-    tail = df.tail(limit or getattr(settings, "WEATHER_HISTORY_TAIL", 10))
+    filtered = df[df["source"] == "current"]
+    if filtered.empty:
+        return None
+    tail = filtered.tail(limit or getattr(settings, "WEATHER_HISTORY_TAIL", 10))
     formatted = tail.copy()
     formatted["timestamp_utc"] = pd.to_datetime(formatted["timestamp_utc"], utc=True, errors="coerce").dt.strftime("%Y-%m-%d %H:%M")
+    formatted["temperature_F"] = formatted["temperature_C"].apply(_c_to_f)
+    formatted["feels_like_F"] = formatted["feels_like_C"].apply(_c_to_f)
     formatted = formatted.rename(
         columns={
             "city": "City",
@@ -163,7 +193,9 @@ def dataframe_tail_html(df: pd.DataFrame, limit: int | None = None) -> str | Non
             "source": "Source",
             "description": "Description",
             "temperature_C": "Temp °C",
+            "temperature_F": "Temp °F",
             "feels_like_C": "Feels Like °C",
+            "feels_like_F": "Feels Like °F",
             "humidity_pct": "Humidity %",
             "wind_kmph": "Wind km/h",
         }

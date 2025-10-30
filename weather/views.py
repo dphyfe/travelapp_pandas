@@ -15,9 +15,14 @@ def home(request: HttpRequest) -> HttpResponse:
     history_path = Path(getattr(settings, "WEATHER_HISTORY_PATH", settings.BASE_DIR / "weather_history.csv"))
     history_df = services.load_history(history_path)
 
+    display_history_df = history_df[history_df["temperature_C"] > 15].sort_values("temperature_C", ascending=False).reset_index(drop=True)
+
     context: dict[str, object] = {
         "form": CityForm(initial={"city": request.GET.get("city", "")}),
-        "history_html": services.dataframe_tail_html(history_df, getattr(settings, "WEATHER_HISTORY_TAIL", 10)),
+        "history_html": services.dataframe_tail_html(
+            display_history_df,
+            getattr(settings, "WEATHER_HISTORY_TAIL", 10),
+        ),
     }
 
     if request.method == "POST":
@@ -30,8 +35,9 @@ def home(request: HttpRequest) -> HttpResponse:
                 report = services.build_report(fresh_df)
                 history_df = services.append_history(history_df, fresh_df)
                 services.persist_history(history_path, history_df)
+                display_history_df = history_df[history_df["temperature_C"] > 15].sort_values("temperature_C", ascending=False).reset_index(drop=True)
                 context["report"] = report
-                context["history_html"] = services.dataframe_tail_html(history_df)
+                context["history_html"] = services.dataframe_tail_html(display_history_df)
                 context["form"] = CityForm(initial={"city": report.city})
             except Exception as exc:  # noqa: BLE001 - show error to user
                 messages.error(request, f"Could not fetch weather for {city}: {exc}")

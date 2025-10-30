@@ -1,0 +1,31 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: Django Server",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "runserver",
+                "0.0.0.0:8000"
+            ],
+            "django": true,
+            "justMyCode": true,
+            "env": {
+                "DJANGO_SETTINGS_MODULE": "weatherproject.settings"
+            }
+        },
+        {
+            "name": "Python: Weather CLI",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/weather_app.py",
+            "args": [
+                "London"
+            ],
+            "justMyCode": true,
+            "console": "integratedTerminal"
+        }
+    ]
+}
