@@ -13,9 +13,10 @@
         }
 
         main {
-            max-width: 960px;
+            max-width: 1200px;
             margin: 0 auto;
             background: #fff;
+            --content-offset: 0px;
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
@@ -25,7 +26,133 @@
             margin-bottom: 1rem;
         }
 
-        form {
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(240px, 300px) 1fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .sidebar {
+            background: #f1f5f9;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.2);
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+
+        .sidebar h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+        }
+
+        .filter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .slider-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .slider-input {
+            width: 100%;
+        }
+
+        .slider-value {
+            font-weight: bold;
+            color: #1d4ed8;
+        }
+
+        .toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .toggle-input {
+            width: 1.15rem;
+            height: 1.15rem;
+            accent-color: #2563eb;
+        }
+
+        .muted {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.25rem;
+        }
+
+        .sidebar li {
+            background: #e2e8f0;
+            border-radius: 6px;
+            padding: 0.35rem 0.5rem;
+        }
+
+        .sidebar button {
+            align-self: flex-start;
+            padding: 0.5rem 1rem;
+            background: #2563eb;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .sidebar button:hover {
+            background: #1d4ed8;
+        }
+
+        .sidebar-card {
+            background: #e0e7ff;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .checkbox-fieldset {
+            margin: 0;
+            padding: 0.75rem 0.5rem 0.5rem;
+            border: 1px solid #cbd5f5;
+            border-radius: 8px;
+        }
+
+        .checkbox-fieldset legend {
+            font-weight: 600;
+            padding: 0 0.25rem;
+        }
+
+        .checkbox-grid {
+            list-style: none;
+            margin: 0.25rem 0 0;
+            padding: 0;
+            display: grid;
+            gap: 0.35rem;
+        }
+
+        .checkbox-grid li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content form {
             display: flex;
             gap: 1rem;
             margin-bottom: 2rem;
@@ -34,7 +161,7 @@
         input[type="text"] {
             flex: 1;
             padding: 0.75rem 1rem;
-            border: 1px solid #ccc;
+            border: 1px solid #cbd5f5;
             border-radius: 8px;
             font-size: 1rem;
         }
@@ -65,7 +192,8 @@
             padding: 0;
         }
 
-        .table {
+        .table,
+        .table-compact {
             width: 100%;
             border-collapse: collapse;
         }
@@ -75,10 +203,17 @@
         }
 
         .table td,
-        .table th {
+        .table th,
+        .table-compact td,
+        .table-compact th {
             padding: 0.75rem;
             text-align: left;
             border-bottom: 1px solid #e2e8f0;
+        }
+
+        .table-compact td,
+        .table-compact th {
+            padding: 0.5rem 0.45rem;
         }
 
         .message {
@@ -90,6 +225,45 @@
         .message.error {
             background: #fee2e2;
             color: #991b1b;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        @media (max-width: 960px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: relative;
+                top: 0;
+                order: -1;
+            }
+
+            .content form {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            button,
+            .sidebar button {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 961px) {
+            .layout {
+                align-items: stretch;
+            }
+
+            .sidebar {
+                position: sticky;
+                top: 2rem;
+                max-height: calc(100vh - 4rem);
+                overflow-y: auto;
+            }
         }
     </style>
 </head>
@@ -104,33 +278,136 @@
         {% endfor %}
         {% endif %}
 
-        <form method="post" novalidate>
-            {% csrf_token %}
-            {{ form.city }}
-            <button type="submit">Fetch weather</button>
-        </form>
+        <div class="layout">
+            <aside class="sidebar">
+                <h2>Filters</h2>
+                {% if home_prices_available %}
+                <form class="filter-form" method="get">
+                    <label for="{{ home_filter_form.max_price.id_for_label }}">Average home price (USD)</label>
+                    <div class="slider-group">
+                        {{ home_filter_form.max_price }}
+                        <div class="slider-value" id="max-price-output">{{ home_price_display_value }}</div>
+                    </div>
+                    <label class="toggle" for="{{ home_filter_form.has_beach.id_for_label }}">
+                        {{ home_filter_form.has_beach }}
+                        <span>{{ home_filter_form.has_beach.label }}</span>
+                    </label>
+                    {% if not home_filter_supports_beach %}
+                    <p class="muted">Beach filter unavailable until home price data includes shoreline details.</p>
+                    {% endif %}
+                    <label class="toggle" for="{{ home_filter_form.has_mountain.id_for_label }}">
+                        {{ home_filter_form.has_mountain }}
+                        <span>{{ home_filter_form.has_mountain.label }}</span>
+                    </label>
+                    {% if not home_filter_supports_mountain %}
+                    <p class="muted">Mountain filter unavailable until elevation data is provided.</p>
+                    {% endif %}
+                    <label class="toggle" for="{{ home_filter_form.has_winter_snow.id_for_label }}">
+                        {{ home_filter_form.has_winter_snow }}
+                        <span>{{ home_filter_form.has_winter_snow.label }}</span>
+                    </label>
+                    {% if not home_filter_supports_winter_snow %}
+                    <p class="muted">Winter snow filter unavailable without seasonal observations.</p>
+                    {% endif %}
+                    {% if home_filter_supports_continent and home_filter_form.continents.field.choices %}
+                    <fieldset class="checkbox-fieldset">
+                        <legend>{{ home_filter_form.continents.label }}</legend>
+                        {{ home_filter_form.continents }}
+                    </fieldset>
+                    {% elif not home_filter_supports_continent %}
+                    <p class="muted">Continent filter unavailable without regional data.</p>
+                    {% endif %}
+                    <p class="muted">{{ home_filter_description }}</p>
+                    <button type="submit">Apply filter</button>
+                </form>
 
-        {% if report %}
-        <section class="card">
-            <h2>{{ report.city }}</h2>
-            <p><strong>Observed (UTC):</strong> {{ report.observed|date:"Y-m-d H:i" }}</p>
-            <p><strong>Conditions:</strong> {{ report.description }}</p>
-            <p><strong>Temperature:</strong> {{ report.temperature_c|floatformat:1 }}°C / {{ report.temperature_f|floatformat:1 }}°F</p>
-            <p><strong>Feels Like:</strong> {{ report.feels_like_c|floatformat:1 }}°C / {{ report.feels_like_f|floatformat:1 }}°F</p>
-            <p><strong>Humidity (%):</strong> {{ report.humidity_pct|floatformat:0 }}</p>
-            <p><strong>Wind (km/h):</strong> {{ report.wind_kmph|floatformat:0 }}</p>
-        </section>
-        {% else %}
-        <p>Enter a city to fetch the latest conditions and forecast.</p>
-        {% endif %}
+                {% if filtered_cities %}
+                <div class="sidebar-card">
+                    <h3>Matching cities</h3>
+                    <ul>
+                        {% for city in filtered_cities %}
+                        <li>{{ city }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                <p class="muted">No cities within the selected filters.</p>
+                {% endif %}
 
-        {% if history_html %}
-        <section>
-            <h2>Recent history</h2>
-            {{ history_html|safe }}
-        </section>
-        {% endif %}
+                {% if home_price_summary_html %}
+                <div class="sidebar-card table-wrapper">
+                    <h3>Home price snapshot</h3>
+                    {{ home_price_summary_html|safe }}
+                </div>
+                {% endif %}
+                {% else %}
+                <p class="muted">Home price data is not available right now.</p>
+                {% endif %}
+            </aside>
+
+            <section class="content">
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    {{ form.city }}
+                    <button type="submit">Fetch weather</button>
+                </form>
+
+                {% if report %}
+                <section class="card">
+                    <h2>{{ report.city }}</h2>
+                    <p><strong>Observed (UTC):</strong> {{ report.observed|date:"Y-m-d H:i" }}</p>
+                    <p><strong>Conditions:</strong> {{ report.description }}</p>
+                    <p><strong>Temperature:</strong> {{ report.temperature_c|floatformat:1 }}°C / {{ report.temperature_f|floatformat:1 }}°F</p>
+                    <p><strong>Feels Like:</strong> {{ report.feels_like_c|floatformat:1 }}°C / {{ report.feels_like_f|floatformat:1 }}°F</p>
+                    <p><strong>Humidity (%):</strong> {{ report.humidity_pct|floatformat:0 }}</p>
+                    <p><strong>Wind (km/h):</strong> {{ report.wind_kmph|floatformat:0 }}</p>
+                </section>
+                {% else %}
+                <p>Enter a city to fetch the latest conditions and forecast.</p>
+                {% endif %}
+
+                {% if history_html %}
+                <section>
+                    <h2>Recent history</h2>
+                    {{ history_html|safe }}
+                </section>
+                {% elif display_history_count == 0 %}
+                <section>
+                    <h2>Recent history</h2>
+                    <p class="muted">No recent observations match the selected filters.</p>
+                </section>
+                {% endif %}
+            </section>
+        </div>
     </main>
+
+    <script>
+        (function () {
+            const slider = document.getElementById("{{ home_filter_form.max_price.id_for_label }}");
+            const output = document.getElementById("max-price-output");
+            if (!slider || !output) {
+                return;
+            }
+            const formatter = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+            const render = () => {
+                const value = Number(slider.value || 0);
+                output.textContent = formatter.format(value);
+            };
+            slider.addEventListener("input", render);
+            render();
+        }());
+
+        (function () {
+            const continentInputs = document.querySelectorAll('input[name="continents"]');
+            continentInputs.forEach((input) => {
+                input.addEventListener("change", () => {
+                    if (input.form) {
+                        input.form.submit();
+                    }
+                });
+            });
+        }());
+    </script>
 </body>
 
 </html>

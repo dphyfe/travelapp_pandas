@@ -3,17 +3,36 @@ London,2025-10-30T12:00:00Z,forecast,Cloudy ,12.0,11.0,64.0,12.0
 New york,2025-10-30T12:00:00Z,forecast,Overcast ,10.0,8.0,85.0,36.0
 atlanta,2025-10-30T12:00:00Z,forecast,Overcast,12.0,7.0,77.0,17.0
 rome,2025-10-30T12:00:00Z,forecast,Cloudy ,21.0,21.0,63.0,22.0
+asheville,2025-10-30T12:00:00Z,forecast,Partly Cloudy ,9.0,7.0,83.0,17.0
+miami,2025-10-30T12:00:00Z,forecast,Overcast ,24.0,26.0,63.0,25.0
 London,2025-10-30T16:35:10Z,current,Partly cloudy,13.0,12.0,67.0,16.0
 New york,2025-10-30T16:41:17Z,current,Heavy rain,13.0,10.0,100.0,36.0
 atlanta,2025-10-30T16:41:38Z,current,Overcast,12.0,10.0,77.0,17.0
 atlanta,2025-10-30T16:44:54Z,current,Overcast,12.0,10.0,77.0,17.0
 rome,2025-10-30T16:48:49Z,current,Cloudy,20.0,20.0,67.0,14.0
 rome,2025-10-30T17:06:09Z,current,Partly cloudy,20.0,20.0,78.0,11.0
+asheville,2025-10-30T20:41:32Z,current,Partly cloudy,12.0,10.0,69.0,13.0
+miami,2025-10-30T20:44:09Z,current,Sunny,26.0,26.0,47.0,32.0
+asheville,2025-10-31T12:00:00Z,forecast,Partly Cloudy ,6.0,3.0,73.0,16.0
 New york,2025-10-31T12:00:00Z,forecast,Overcast ,12.0,10.0,70.0,32.0
-London,2025-10-31T12:00:00Z,forecast,Partly Cloudy ,15.0,15.0,74.0,20.0
-rome,2025-10-31T12:00:00Z,forecast,Sunny,22.0,25.0,53.0,6.0
+miami,2025-10-31T12:00:00Z,forecast,Sunny,24.0,25.0,60.0,17.0
 atlanta,2025-10-31T12:00:00Z,forecast,Partly Cloudy ,10.0,8.0,64.0,15.0
+rome,2025-10-31T12:00:00Z,forecast,Sunny,22.0,25.0,53.0,6.0
+London,2025-10-31T12:00:00Z,forecast,Partly Cloudy ,15.0,15.0,74.0,20.0
 London,2025-11-01T12:00:00Z,forecast,Partly Cloudy ,13.0,11.0,63.0,23.0
 New york,2025-11-01T12:00:00Z,forecast,Partly Cloudy ,13.0,11.0,44.0,26.0
 atlanta,2025-11-01T12:00:00Z,forecast,Sunny,16.0,16.0,41.0,4.0
 rome,2025-11-01T12:00:00Z,forecast,Sunny,23.0,25.0,53.0,5.0
+asheville,2025-11-01T12:00:00Z,forecast,Sunny,13.0,13.0,46.0,2.0
+miami,2025-11-01T12:00:00Z,forecast,Sunny,25.0,26.0,50.0,13.0
+miami,2025-11-01T15:52:18Z,current,Sunny,23.0,25.0,51.0,12.0
+miami,2025-11-02T12:00:00Z,forecast,Patchy rain nearby,27.0,28.0,65.0,18.0
+asheville,2025-11-02T12:00:00Z,forecast,Sunny,12.0,10.0,58.0,12.0
+asheville,2025-11-02T17:20:39Z,current,Partly cloudy,12.0,11.0,54.0,8.0
+miami,2025-11-03T12:00:00Z,forecast,Light drizzle,24.0,26.0,77.0,10.0
+asheville,2025-11-03T12:00:00Z,forecast,Partly Cloudy ,8.0,5.0,83.0,7.0
+paris,2025-11-03T12:00:00Z,forecast,Partly Cloudy ,13.0,12.0,72.0,17.0
+paris,2025-11-03T17:24:42Z,current,Partly cloudy,13.0,12.0,94.0,13.0
+asheville,2025-11-04T12:00:00Z,forecast,Sunny,12.0,11.0,63.0,4.0
+paris,2025-11-04T12:00:00Z,forecast,Sunny,14.0,13.0,51.0,15.0
+paris,2025-11-05T12:00:00Z,forecast,Cloudy ,16.0,16.0,52.0,14.0

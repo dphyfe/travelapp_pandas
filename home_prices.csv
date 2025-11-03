@@ -1,0 +1,210 @@
+city,avg_home_price,Beaches,Mountains,Continent
+Atlanta,385000,False,False,North America
+Asheville,340000,False,True,North America
+London,780000,False,False,Europe
+Miami,610000,True,False,North America
+New York,950000,True,False,North America
+Rome,420000,False,True,Europe
+San Diego,825000,True,False,North America
+Barcelona,560000,True,True,Europe
+Denver,545000,False,True,North America
+Washington D.C.,804845,True,False,North America
+Ottawa,401702,False,True,North America
+Mexico City,613900,False,True,North America
+Guatemala City,640345,True,True,North America
+Belmopan,441829,False,True,North America
+San Salvador,271621,False,False,North America
+Tegucigalpa,290067,False,True,North America
+Managua,418543,True,True,North America
+San Jose,889725,True,False,North America
+Panama City,764979,False,False,North America
+Havana,792661,True,True,North America
+Nassau,855235,True,False,North America
+Kingston,799573,False,True,North America
+Port of Spain,834758,False,True,North America
+Bridgetown,825394,True,False,North America
+Castries,773023,True,False,North America
+Roseau,698652,True,True,North America
+St. George's,810026,True,False,North America
+Basseterre,249836,False,False,North America
+Kingstown,476556,True,False,North America
+Saint John's,848792,True,False,North America
+Santo Domingo,567269,True,True,North America
+Port-au-Prince,373913,False,True,North America
+San Juan,507871,False,False,North America
+Hamilton,220353,True,False,North America
+Road Town,874217,False,False,North America
+Oranjestad,801027,False,False,North America
+Willemstad,622311,False,False,North America
+Philipsburg,541866,False,False,North America
+Charlotte Amalie,821519,True,True,North America
+Basse-Terre,437031,True,True,North America
+Fort-de-France,685005,False,False,North America
+George Town,378496,True,True,North America
+Plymouth,830495,True,False,North America
+Brades,400703,False,True,North America
+Cockburn Town,550389,True,False,North America
+Kingston (Norfolk),363114,False,True,North America
+Belize City,601016,True,False,North America
+Saint-Pierre,460345,False,False,North America
+Iqaluit,413289,True,False,North America
+Whitehorse,472239,False,True,North America
+Yellowknife,959066,False,False,North America
+Anchorage,836964,False,True,North America
+Honolulu,590154,False,False,North America
+Juneau,594664,True,False,North America
+Winnipeg,492491,False,False,North America
+Halifax,376590,True,False,North America
+Quebec City,866962,True,False,North America
+Edmonton,567143,True,False,North America
+Calgary,480951,False,False,North America
+Vancouver,383228,True,True,North America
+Tijuana,462754,False,False,North America
+Monterrey,411709,False,False,North America
+Puebla,326694,True,True,North America
+Leon,864079,True,False,North America
+Merida,832655,True,False,North America
+Cancun,844635,False,False,North America
+Hermosillo,456421,False,False,North America
+Chihuahua,422062,False,False,North America
+Toluca,803833,False,False,North America
+Morelia,517702,False,False,North America
+Veracruz,427836,False,False,North America
+Villahermosa,889270,False,True,North America
+Tuxtla Gutierrez,244570,False,False,North America
+Culiacan,964980,False,False,North America
+Aguascalientes,950611,False,False,North America
+Queretaro,910776,False,True,North America
+Cuernavaca,586788,True,False,North America
+Durango,521865,True,True,North America
+Mazatlan,770286,True,False,North America
+Acapulco,315865,True,True,North America
+Tampico,604392,False,False,North America
+Matamoros,356147,False,False,North America
+Reynosa,542224,True,True,North America
+Torreon,350723,False,True,North America
+Saltillo,874624,False,True,North America
+Laredo,488007,True,False,North America
+Brownsville,973869,True,False,North America
+McAllen,259147,True,False,North America
+El Paso,792968,True,True,North America
+Albuquerque,360781,False,True,North America
+Santa Fe,465991,True,False,North America
+Colorado Springs,719576,False,True,North America
+Cheyenne,468384,False,False,North America
+Boise,655188,False,True,North America
+Spokane,344854,False,False,North America
+Fairbanks,470224,True,False,North America
+Fargo,800832,True,False,North America
+Bismarck,958496,True,True,North America
+Minneapolis,348826,True,False,North America
+Madison,630082,True,False,North America
+Des Moines,362443,True,True,North America
+Lincoln,375354,True,False,North America
+Omaha,882086,True,False,North America
+Tulsa,365998,False,True,North America
+Oklahoma City,381260,False,False,North America
+Little Rock,832980,False,True,North America
+Memphis,274124,True,False,North America
+Nashville,802461,True,True,North America
+Louisville,556508,True,True,North America
+Cincinnati,549106,False,False,North America
+Pittsburgh,478222,True,False,North America
+Cleveland,423447,False,True,North America
+Buffalo,445344,True,False,North America
+Syracuse,889980,True,False,North America
+Albany,605612,True,False,North America
+Hartford,919543,True,True,North America
+Providence,421504,False,True,North America
+Newark,573725,True,False,North America
+Jersey City,812051,False,True,North America
+Baltimore,751043,True,False,North America
+Richmond,884602,True,False,North America
+Norfolk,557009,False,False,North America
+Raleigh,586630,True,False,North America
+Durham,338823,False,False,North America
+Charleston,328697,False,False,North America
+Savannah,493520,True,False,North America
+Birmingham,546319,False,False,North America
+Montgomery,915600,False,True,North America
+Mobile,224788,False,False,North America
+New Orleans,294502,False,True,North America
+Baton Rouge,264260,True,True,North America
+Jackson,968480,False,False,North America
+Shreveport,880756,False,True,North America
+Wichita,796670,True,False,North America
+Topeka,345742,True,False,North America
+Kansas City,414951,False,True,North America
+Saint Louis,765829,True,False,North America
+Springfield,325617,True,False,North America
+Peoria,553919,True,False,North America
+Indianapolis,410010,True,True,North America
+Columbus,417060,False,True,North America
+Toledo,889112,False,False,North America
+Dayton,968028,True,True,North America
+Grand Rapids,342376,True,False,North America
+Lansing,841929,True,False,North America
+Detroit,545577,True,False,North America
+Milwaukee,500942,True,False,North America
+Green Bay,822159,True,False,North America
+Chicago,474487,True,True,North America
+Rockford,939593,True,True,North America
+Springfield (MA),686183,False,True,North America
+Manchester,429193,False,False,North America
+Portland (ME),261736,False,False,North America
+Burlington,261266,False,True,North America
+Bangor,655011,False,True,North America
+Augusta,324047,True,True,North America
+Reno,882204,False,True,North America
+Carson City,334864,False,False,North America
+Salt Lake City,761685,False,False,North America
+Provo,665035,True,False,North America
+Logan,569585,False,False,North America
+Idaho Falls,338912,False,False,North America
+Great Falls,806431,False,True,North America
+Billings,696337,True,True,North America
+Casper,228735,False,True,North America
+Rapid City,655601,False,False,North America
+Sioux Falls,630875,False,False,North America
+Duluth,614591,False,False,North America
+Marquette,925617,True,False,North America
+Thunder Bay,439721,False,False,North America
+Sault Ste. Marie,467832,False,False,North America
+Sudbury,703280,False,False,North America
+Saskatoon,261040,True,False,North America
+Regina,461390,True,True,North America
+Prince Albert,712426,False,False,North America
+Sherbrooke,710658,False,True,North America
+Saint John,481813,True,True,North America
+Moncton,421203,True,False,North America
+Charlottetown,315490,True,False,North America
+Fredericton,421479,True,False,North America
+St. John's,497600,False,False,North America
+Gander,468072,False,False,North America
+Corner Brook,620242,True,True,North America
+Labrador City,714647,False,False,North America
+Nuuk,262207,True,True,North America
+Torshavn,983506,False,True,Europe
+Reykjavik,651026,False,True,Europe
+Paris,286704,False,True,Europe
+Berlin,586578,True,True,Europe
+Madrid,863544,True,False,Europe
+Lisbon,460852,False,True,Europe
+Vienna,1072805,False,False,Europe
+Prague,798910,False,True,Europe
+Warsaw,554397,False,False,Europe
+Budapest,609612,False,True,Europe
+Copenhagen,702799,True,True,Europe
+Stockholm,770457,False,False,Europe
+Oslo,736287,False,False,Europe
+Helsinki,325089,False,True,Europe
+Brussels,1051268,False,True,Europe
+Amsterdam,1047144,False,True,Europe
+Bern,490710,False,True,Europe
+Luxembourg,468279,False,True,Europe
+Monaco,987592,True,True,Europe
+Andorra la Vella,369906,False,True,Europe
+San Marino,253344,False,True,Europe
+Vatican City,470618,False,True,Europe
+Dublin,702558,True,False,Europe
+Edinburgh,796804,False,True,Europe

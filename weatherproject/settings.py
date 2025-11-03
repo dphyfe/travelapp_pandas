@@ -84,3 +84,4 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Weather-specific configuration
 WEATHER_HISTORY_PATH = BASE_DIR / "weather_history.csv"
 WEATHER_HISTORY_TAIL = 10
+HOME_PRICES_PATH = BASE_DIR / "home_prices.csv"

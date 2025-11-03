@@ -22,6 +22,15 @@ HISTORY_COLUMNS: Sequence[str] = (
     "humidity_pct",
     "wind_kmph",
 )
+HOME_PRICE_BASE_COLUMNS: Sequence[str] = ("city", "avg_home_price")
+HOME_PRICE_OPTIONAL_BEACH_COLUMNS: Sequence[str] = ("has_beach", "Beaches", "beach", "has_beaches")
+HOME_PRICE_OPTIONAL_MOUNTAIN_COLUMNS: Sequence[str] = ("has_mountain", "Mountains", "mountains", "has_mountains")
+HOME_PRICE_OPTIONAL_CONTINENT_COLUMNS: Sequence[str] = ("continent", "Continent", "region", "Region")
+HOME_PRICE_KEY_COLUMN = "city_key"
+HOME_PRICE_NORMALIZED_BEACH_COLUMN = "has_beach"
+HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN = "has_mountain"
+HOME_PRICE_NORMALIZED_CONTINENT_COLUMN = "continent"
+WINTER_MONTH_NAMES: Sequence[str] = ("December", "January", "February")
 
 
 @dataclass
@@ -51,10 +60,34 @@ def _history_path() -> Path:
     return Path(getattr(settings, "WEATHER_HISTORY_PATH", Path(settings.BASE_DIR) / "weather_history.csv"))
 
 
+def _home_price_path() -> Path:
+    return Path(getattr(settings, "HOME_PRICES_PATH", Path(settings.BASE_DIR) / "home_prices.csv"))
+
+
+def _empty_home_price_df() -> pd.DataFrame:
+    return pd.DataFrame(
+        columns=[
+            *HOME_PRICE_BASE_COLUMNS,
+            HOME_PRICE_NORMALIZED_BEACH_COLUMN,
+            HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN,
+            HOME_PRICE_NORMALIZED_CONTINENT_COLUMN,
+            HOME_PRICE_KEY_COLUMN,
+        ]
+    )
+
+
 def _c_to_f(value: float) -> float:
     if pd.isna(value):
         return value
     return (float(value) * 9 / 5) + 32
+
+
+def _coerce_bool(value: object) -> bool:
+    if pd.isna(value):
+        return False
+    if isinstance(value, str):
+        return value.strip().lower() in {"true", "1", "yes", "y", "t", "on"}
+    return bool(value)
 
 
 def fetch_weather_payload(city: str) -> dict:
@@ -134,6 +167,153 @@ def append_history(history_df: pd.DataFrame, new_df: pd.DataFrame) -> pd.DataFra
 def persist_history(history_path: Path | None, df: pd.DataFrame) -> None:
     target = history_path or _history_path()
     df.to_csv(target, index=False, date_format="%Y-%m-%dT%H:%M:%SZ")
+
+
+def load_home_prices(home_price_path: Path | None = None) -> pd.DataFrame:
+    target = home_price_path or _home_price_path()
+    if not target.exists():
+        return _empty_home_price_df()
+
+    df = pd.read_csv(target)
+    if df.empty:
+        return _empty_home_price_df()
+
+    missing_columns = [column for column in HOME_PRICE_BASE_COLUMNS if column not in df.columns]
+    if missing_columns:
+        return _empty_home_price_df()
+
+    cleaned = df[list(HOME_PRICE_BASE_COLUMNS)].copy()
+    cleaned["city"] = cleaned["city"].astype("string").str.strip()
+    cleaned["avg_home_price"] = pd.to_numeric(cleaned["avg_home_price"], errors="coerce")
+
+    beach_column = next((column for column in HOME_PRICE_OPTIONAL_BEACH_COLUMNS if column in df.columns), None)
+    if beach_column is not None:
+        cleaned[HOME_PRICE_NORMALIZED_BEACH_COLUMN] = df[beach_column].apply(_coerce_bool)
+    else:
+        cleaned[HOME_PRICE_NORMALIZED_BEACH_COLUMN] = False
+
+    mountain_column = next((column for column in HOME_PRICE_OPTIONAL_MOUNTAIN_COLUMNS if column in df.columns), None)
+    if mountain_column is not None:
+        cleaned[HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN] = df[mountain_column].apply(_coerce_bool)
+    else:
+        cleaned[HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN] = False
+
+    continent_column = next((column for column in HOME_PRICE_OPTIONAL_CONTINENT_COLUMNS if column in df.columns), None)
+    if continent_column is not None:
+        cleaned[HOME_PRICE_NORMALIZED_CONTINENT_COLUMN] = df[continent_column].astype("string").str.strip().replace({"": pd.NA})
+    else:
+        cleaned[HOME_PRICE_NORMALIZED_CONTINENT_COLUMN] = pd.NA
+
+    cleaned = cleaned.dropna(subset=["city", "avg_home_price"])
+    if cleaned.empty:
+        return _empty_home_price_df()
+
+    cleaned["avg_home_price"] = cleaned["avg_home_price"].astype(float)
+    cleaned[HOME_PRICE_NORMALIZED_BEACH_COLUMN] = cleaned[HOME_PRICE_NORMALIZED_BEACH_COLUMN].astype(bool)
+    cleaned[HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN] = cleaned[HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN].astype(bool)
+    cleaned[HOME_PRICE_NORMALIZED_CONTINENT_COLUMN] = cleaned[HOME_PRICE_NORMALIZED_CONTINENT_COLUMN].astype("string")
+    cleaned[HOME_PRICE_KEY_COLUMN] = cleaned["city"].str.casefold()
+    cleaned = cleaned.drop_duplicates(subset=HOME_PRICE_KEY_COLUMN, keep="last")
+    cleaned = cleaned.reindex(
+        columns=[
+            *HOME_PRICE_BASE_COLUMNS,
+            HOME_PRICE_NORMALIZED_BEACH_COLUMN,
+            HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN,
+            HOME_PRICE_NORMALIZED_CONTINENT_COLUMN,
+            HOME_PRICE_KEY_COLUMN,
+        ]
+    )
+    return cleaned.reset_index(drop=True)
+
+
+def filter_cities_by_home_price(
+    home_prices: pd.DataFrame,
+    max_price: float | int | None,
+    require_beach: bool = False,
+    require_mountain: bool = False,
+    continents: Sequence[str] | None = None,
+) -> pd.DataFrame:
+    if home_prices.empty:
+        return home_prices
+
+    try:
+        threshold = float(max_price) if max_price is not None else float(home_prices["avg_home_price"].max())
+    except (TypeError, ValueError):
+        threshold = float(home_prices["avg_home_price"].max())
+
+    filtered = home_prices[home_prices["avg_home_price"] <= threshold].copy()
+    if require_beach and HOME_PRICE_NORMALIZED_BEACH_COLUMN in filtered.columns:
+        filtered = filtered[filtered[HOME_PRICE_NORMALIZED_BEACH_COLUMN]]
+    if require_mountain and HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN in filtered.columns:
+        filtered = filtered[filtered[HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN]]
+    if continents and HOME_PRICE_NORMALIZED_CONTINENT_COLUMN in filtered.columns:
+        normalized = {str(value).strip().casefold() for value in continents if str(value).strip()}
+        filtered = filtered[filtered[HOME_PRICE_NORMALIZED_CONTINENT_COLUMN].astype("string").str.strip().str.casefold().isin(normalized)]
+    return filtered.sort_values("avg_home_price").reset_index(drop=True)
+
+
+def filter_history_by_cities(history_df: pd.DataFrame, cities_df: pd.DataFrame) -> pd.DataFrame:
+    if history_df.empty:
+        return history_df
+    if cities_df.empty:
+        return history_df.iloc[0:0]
+
+    if HOME_PRICE_KEY_COLUMN not in cities_df.columns:
+        raise KeyError(f"Expected '{HOME_PRICE_KEY_COLUMN}' column in cities_df")
+
+    city_keys = set(cities_df[HOME_PRICE_KEY_COLUMN])
+    filtered = history_df.assign(_city_key=history_df["city"].astype("string").str.strip().str.casefold())
+    filtered = filtered[filtered["_city_key"].isin(city_keys)]
+    return filtered.drop(columns=["_city_key"]).reset_index(drop=True)
+
+
+def filter_history_for_winter_snow(history_df: pd.DataFrame, require_winter_snow: bool) -> pd.DataFrame:
+    if not require_winter_snow:
+        return history_df
+    if history_df.empty:
+        return history_df
+
+    enriched = history_df.copy()
+    enriched["_month_name"] = pd.to_datetime(enriched["timestamp_utc"], utc=True, errors="coerce").dt.month_name()
+    enriched["_has_snow"] = enriched["description"].astype("string").str.contains("snow", case=False, na=False)
+
+    mask = enriched["_month_name"].isin(WINTER_MONTH_NAMES) & enriched["_has_snow"]
+    filtered = enriched[mask].drop(columns=["_month_name", "_has_snow"], errors="ignore")
+    return filtered.reset_index(drop=True)
+
+
+def home_prices_html(home_prices: pd.DataFrame) -> str | None:
+    if home_prices.empty:
+        return None
+
+    formatted = home_prices.copy()
+    if HOME_PRICE_KEY_COLUMN in formatted.columns:
+        formatted = formatted.drop(columns=[HOME_PRICE_KEY_COLUMN])
+    formatted = formatted.rename(
+        columns={
+            "city": "City",
+            "avg_home_price": "Avg Home Price (USD)",
+            HOME_PRICE_NORMALIZED_BEACH_COLUMN: "Beaches",
+            HOME_PRICE_NORMALIZED_MOUNTAIN_COLUMN: "Mountains",
+            HOME_PRICE_NORMALIZED_CONTINENT_COLUMN: "Continent",
+        }
+    )
+    if "Beaches" in formatted.columns:
+        formatted["Beaches"] = formatted["Beaches"].map(lambda value: "Yes" if bool(value) else "No")
+    if "Mountains" in formatted.columns:
+        formatted["Mountains"] = formatted["Mountains"].map(lambda value: "Yes" if bool(value) else "No")
+    if "Continent" in formatted.columns:
+        formatted["Continent"] = formatted["Continent"].fillna("—")
+    formatted["Avg Home Price (USD)"] = formatted["Avg Home Price (USD)"].map(lambda value: f"${value:,.0f}")
+    column_order = ["City", "Avg Home Price (USD)"]
+    if "Beaches" in formatted.columns:
+        column_order.append("Beaches")
+    if "Mountains" in formatted.columns:
+        column_order.append("Mountains")
+    if "Continent" in formatted.columns:
+        column_order.append("Continent")
+    formatted = formatted[column_order]
+    return formatted.to_html(classes=["table", "table-compact"], index=False, border=0, justify="center")
 
 
 def build_report(df: pd.DataFrame) -> WeatherReport:
