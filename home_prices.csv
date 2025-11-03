@@ -208,3 +208,283 @@ San Marino,253344,False,True,Europe
 Vatican City,470618,False,True,Europe
 Dublin,702558,True,False,Europe
 Edinburgh,796804,False,True,Europe
+Arequipa,447216,True,True,South America
+Tarija,467269,True,True,South America
+Rivera,273913,False,True,South America
+Santiago,407871,False,False,South America
+Natal,120353,True,False,South America
+Guayaquil,281247,True,True,South America
+Georgetown,480026,True,True,South America
+Boa Vista,145692,True,True,South America
+Cusco,154759,True,True,South America
+Recife,270385,False,False,South America
+Valencia VE,278496,True,True,South America
+Sao Paulo,574958,True,True,South America
+Aracaju,300703,False,True,South America
+Caracas,450389,True,False,South America
+Quito,263114,False,True,South America
+Vitoria,501016,True,False,South America
+San Juan AR,360345,False,True,South America
+Cartagena,313289,True,True,South America
+San Miguel de Tucuman,372239,False,True,South America
+La Paz,359295,True,False,South America
+Piura,494664,True,True,South America
+Belo Horizonte,392491,False,False,South America
+Concepcion,276590,True,True,South America
+Trujillo,567608,False,True,South America
+Potosi,467077,True,False,South America
+Joao Pessoa,380951,False,False,South America
+Ciudad del Este,283228,True,True,South America
+Iquitos,362754,False,True,South America
+Oruro,311709,False,False,South America
+Belem,226694,True,True,South America
+Rio de Janeiro,182882,False,True,South America
+Santa Cruz,247399,False,True,South America
+Brasilia,472727,False,True,South America
+Manaus,394476,False,True,South America
+Asuncion,176994,False,True,South America
+Cuiaba,574065,False,True,South America
+Maracaibo,398836,False,True,South America
+Porto Alegre,410341,True,False,South America
+Campinas,177153,True,False,South America
+Riberalta,608613,False,False,South America
+Sucre,224047,False,False,South America
+Temuco,539217,False,True,South America
+Goiania,213067,False,False,South America
+Paramaribo,212559,False,False,South America
+Villarrica,568106,True,True,South America
+Cordoba,215865,True,True,South America
+Cochabamba,504392,False,True,South America
+Mendoza,256147,True,True,South America
+Barranquilla,442224,True,True,South America
+Curitiba,250723,False,True,South America
+Salvador,451970,True,True,South America
+Punta Arenas,132167,False,False,South America
+Fortaleza,439138,True,True,South America
+Catamarca,298986,False,True,South America
+Rosario,466987,False,False,South America
+La Rioja AR,263242,True,False,South America
+Cali,397873,True,True,South America
+Campo Grande,619576,True,True,South America
+Salta,368384,False,False,South America
+Lima,555188,False,True,South America
+Montevideo,244854,False,False,South America
+Medellin,370224,True,False,South America
+Bogota,259903,True,False,South America
+Buenos Aires,348457,True,True,South America
+Cuenca,248826,True,True,South America
+Maceio,530082,True,False,South America
+Valparaiso,262443,True,True,South America
+Colombo,565698,False,True,Asia
+Tokyo,284434,False,True,Asia
+Peshawar,268823,False,False,Asia
+Macau,258697,False,False,Asia
+Lucknow,423520,True,False,Asia
+Nagpur,476319,False,False,Asia
+Kandahar,845600,False,True,Asia
+Hyderabad,154788,False,False,Asia
+Herat,224502,False,True,Asia
+Johor Bahru,194260,True,True,Asia
+Nagoya,898480,False,False,Asia
+Penang,810756,False,True,Asia
+Kuala Lumpur,726670,True,False,Asia
+Chiang Mai,275742,True,True,Asia
+Lhasa,344951,False,True,Asia
+Urumqi,695829,True,False,Asia
+New Delhi,255617,True,False,Asia
+Chittagong,483919,True,False,Asia
+Lahore,340010,True,True,Asia
+Male,347060,False,True,Asia
+Bengaluru,819112,False,True,Asia
+Ahmedabad,898028,True,True,Asia
+Manila,272376,True,False,Asia
+Guangzhou,771929,True,False,Asia
+Chiang Rai,475577,True,False,Asia
+Goa,430942,True,False,Asia
+Seoul,752159,True,False,Asia
+Kabul,404487,True,True,Asia
+Taipei,869593,True,True,Asia
+Yogyakarta,616183,False,True,Asia
+Quetta,359193,False,False,Asia
+Bali,191736,False,False,Asia
+Chennai,191266,False,True,Asia
+Xi'an,585011,False,True,Asia
+Chengdu,254047,True,True,Asia
+Jakarta,812204,False,True,Asia
+Shenzhen,264864,False,False,Asia
+Wuhan,691685,False,True,Asia
+Bangkok,595035,True,True,Asia
+Kaohsiung,499585,False,False,Asia
+Surat,268912,False,False,Asia
+Karachi,736431,False,True,Asia
+Beijing,626337,True,True,Asia
+Hong Kong,158735,False,True,Asia
+Davao,585601,False,False,Asia
+Dhaka,560875,False,False,Asia
+Lanzhou,544591,False,True,Asia
+Fukuoka,855617,True,False,Asia
+Daegu,369721,False,False,Asia
+Surabaya,397832,False,False,Asia
+Thimphu,633280,False,False,Asia
+Sylhet,191040,True,False,Asia
+Bandung,391390,True,True,Asia
+Kolkata,642426,False,False,Asia
+Chongqing,640658,False,True,Asia
+Sapporo,411813,True,True,Asia
+Hanoi,351203,True,False,Asia
+Busan,245490,True,False,Asia
+Jaipur,351479,True,True,Asia
+Da Nang,427600,False,False,Asia
+Cebu,398072,False,False,Asia
+Kathmandu,550242,True,True,Asia
+Islamabad,644647,False,False,Asia
+Mumbai,192207,True,True,Asia
+Kunming,883506,False,True,Asia
+Singapore,551026,True,True,Asia
+Pune,186704,False,True,Asia
+Indore,486578,True,True,Asia
+Nanjing,763544,True,False,Asia
+Shanghai,360852,False,True,Asia
+Tianjin,449327,False,False,Asia
+Osaka,260276,False,True,Asia
+Ho Chi Minh City,857911,False,True,Asia
+Phuket,464631,True,True,Asia
+Hangzhou,605712,True,True,Asia
+Toamasina,389454,True,False,Africa
+Porto Novo,403970,True,True,Africa
+Dakar,174366,True,False,Africa
+Kinshasa,433231,False,False,Africa
+Nampula,117631,True,True,Africa
+Maputo,263615,False,False,Africa
+Harare,334566,False,False,Africa
+N'Djamena,479272,False,False,Africa
+Victoria,120050,True,True,Africa
+Casablanca,383184,False,False,Africa
+Monrovia,201625,False,False,Africa
+Antananarivo,300990,False,True,Africa
+Moroni,429043,True,False,Africa
+Lome,333004,False,False,Africa
+Giza,100724,False,True,Africa
+Lagos,426326,True,True,Africa
+Tripoli,333971,False,False,Africa
+Bamako,397148,True,True,Africa
+Johannesburg,209424,False,True,Africa
+Malabo,189565,False,False,Africa
+Luanda,414515,True,True,Africa
+Benghazi,109408,True,False,Africa
+Walvis Bay,404823,True,False,Africa
+Luxor,284699,False,True,Africa
+Douala,356340,False,True,Africa
+Bulawayo,199130,False,True,Africa
+Port Louis,396265,True,False,Africa
+Beira,372175,False,False,Africa
+Nairobi,391468,False,True,Africa
+Maseru,96604,False,True,Africa
+Khartoum,164620,False,False,Africa
+Durban,321860,False,True,Africa
+Mombasa,172198,False,False,Africa
+Mamoudzou,416284,True,True,Africa
+Niamey,233586,False,True,Africa
+Lubumbashi,166287,False,True,Africa
+Francistown,126468,False,False,Africa
+Kigali,373356,False,True,Africa
+Addis Ababa,404029,True,False,Africa
+Cape Town,294095,True,False,Africa
+Kampala,247591,True,False,Africa
+Dodoma,187940,False,False,Africa
+Gaborone,207538,True,False,Africa
+Pretoria,164972,True,True,Africa
+Conakry,396974,True,True,Africa
+Dar es Salaam,469127,True,True,Africa
+Takoradi,137312,False,False,Africa
+Cotonou,377322,False,True,Africa
+Mbabane,215985,False,True,Africa
+Kumasi,82160,False,True,Africa
+Port Said,323900,False,True,Africa
+Lobito,145799,False,False,Africa
+Kano,164388,True,False,Africa
+Ibadan,182214,False,False,Africa
+Arusha,335445,False,True,Africa
+Algiers,94221,True,False,Africa
+Libreville,253075,False,False,Africa
+Port Elizabeth,95068,False,True,Africa
+Sfax,397868,False,True,Africa
+Yaounde,478387,True,False,Africa
+Cairo,147752,False,False,Africa
+Rabat,271343,False,False,Africa
+Alexandria,252571,True,False,Africa
+Bujumbura,209859,False,True,Africa
+Oran,136318,True,False,Africa
+Marrakesh,499817,True,False,Africa
+Constantine,96589,True,False,Africa
+Bloemfontein,447380,False,True,Africa
+Omdurman,431451,False,True,Africa
+Abidjan,152633,True,True,Africa
+Abuja,481882,False,False,Africa
+Windhoek,119460,False,False,Africa
+Accra,87853,False,True,Africa
+Tangier,226005,True,False,Africa
+Nouakchott,165747,True,True,Africa
+Yamoussoukro,147625,True,False,Africa
+Laghouat,100873,False,False,Africa
+Kisumu,233858,False,True,Africa
+Asmara,482441,False,True,Africa
+Pointe Noire,343056,False,False,Africa
+Ouagadougou,254601,True,True,Africa
+Djibouti,378451,False,True,Africa
+Tunis,299743,False,False,Africa
+Freetown,393106,True,True,Africa
+Brazzaville,102514,False,False,Africa
+Dire Dawa,496482,False,True,Africa
+Sousse,181563,True,False,Africa
+Lae,717537,True,False,Oceania
+Geelong,568237,True,False,Oceania
+Toowoomba,631488,True,False,Oceania
+Nuku'alofa,785265,True,False,Oceania
+Napier,337149,False,True,Oceania
+Palmerston North,721251,True,False,Oceania
+Perth,475175,True,False,Oceania
+Wollongong,684464,False,False,Oceania
+Honiara,574725,False,True,Oceania
+Hobart,775744,False,True,Oceania
+Adelaide,828973,False,False,Oceania
+Lautoka,551398,True,False,Oceania
+Port Vila,680412,True,False,Oceania
+Dunedin,620540,True,False,Oceania
+Goroka,494056,True,False,Oceania
+Avarua,911152,True,True,Oceania
+Kokopo,647742,False,False,Oceania
+Gold Coast,269419,True,False,Oceania
+Sydney,266969,True,False,Oceania
+Newcastle,420634,True,True,Oceania
+Whangarei,493295,True,True,Oceania
+Suva,911363,False,False,Oceania
+Hamilton NZ,468263,True,True,Oceania
+Majuro,725024,True,False,Oceania
+Rotorua,511869,False,False,Oceania
+Melbourne,316641,True,False,Oceania
+Brisbane,294555,False,True,Oceania
+Townsville,933275,False,False,Oceania
+Rabaul,721809,True,False,Oceania
+New Plymouth,879190,True,False,Oceania
+Auckland,813512,False,False,Oceania
+Apia,905531,True,True,Oceania
+Pago Pago,363222,True,False,Oceania
+Wellington,672711,True,False,Oceania
+Sunshine Coast,503529,False,False,Oceania
+Cairns,287697,True,False,Oceania
+Canberra,554423,True,True,Oceania
+Darwin,339746,True,False,Oceania
+Port Moresby,918601,False,True,Oceania
+Noumea,346335,True,True,Oceania
+Tarawa,384288,True,True,Oceania
+Christchurch,553063,True,False,Oceania
+Fakaofo,593348,False,False,Oceania
+Invercargill,897424,True,False,Oceania
+Port Stanley,378845,False,False,Oceania
+Queenstown NZ,453786,True,False,Oceania
+Funafuti,361453,True,False,Oceania
+Nelson NZ,661173,True,True,Oceania
+Papeete,473194,True,False,Oceania
+Nadi,650337,True,False,Oceania
+Tauranga,907191,False,False,Oceania

@@ -75,10 +75,15 @@ def home(request: HttpRequest) -> HttpResponse:
     supports_continent_filter = not home_price_df.empty and HOME_PRICE_NORMALIZED_CONTINENT_COLUMN in home_price_df.columns
     supports_winter_snow_filter = not history_df.empty and {"timestamp_utc", "description"}.issubset(history_df.columns)
 
+    default_continent_canonical: list[str] = []
+    default_continent_codes: list[str] = []
+
     if supports_continent_filter:
         available_continent_map: dict[str, str] = {}
         continent_code_by_canonical: dict[str, str] = {}
-        for raw_value in home_price_df[HOME_PRICE_NORMALIZED_CONTINENT_COLUMN].dropna().astype("string"):
+
+        raw_continents = home_price_df[HOME_PRICE_NORMALIZED_CONTINENT_COLUMN].dropna().astype("string")
+        for raw_value in raw_continents:
             canonical_candidate = str(raw_value).strip()
             if not canonical_candidate:
                 continue
@@ -92,16 +97,24 @@ def home(request: HttpRequest) -> HttpResponse:
             continent_code_by_canonical[canonical_value] = code
             available_continent_map.setdefault(code.casefold(), canonical_value)
 
-        continent_choices = [(code, f"{code} — {canonical}") for canonical, code in sorted(continent_code_by_canonical.items(), key=lambda item: item[0].casefold())]
-
         for alias, code in CONTINENT_CODE_LOOKUP.items():
             canonical = available_continent_map.get(alias)
             if canonical:
                 available_continent_map.setdefault(code.casefold(), canonical)
+
+        sorted_continent_items = sorted(
+            continent_code_by_canonical.items(),
+            key=lambda item: item[0].casefold(),
+        )
+        default_continent_canonical = [canonical for canonical, _ in sorted_continent_items]
+        default_continent_codes = [code for canonical, code in sorted_continent_items]
+        continent_choices = [(code, f"{code} - {canonical}") for canonical, code in sorted_continent_items]
     else:
         available_continent_map = {}
         continent_code_by_canonical = {}
         continent_choices = []
+        default_continent_canonical = []
+        default_continent_codes = []
 
     price_min = int(home_price_df["avg_home_price"].min()) if not home_price_df.empty else 0
     price_max = int(home_price_df["avg_home_price"].max()) if not home_price_df.empty else 0
@@ -141,6 +154,11 @@ def home(request: HttpRequest) -> HttpResponse:
         mapped_code = continent_code_by_canonical.get(canonical_value)
         if mapped_code:
             initial_continent_codes.append(mapped_code)
+
+    if supports_continent_filter and not request.GET:
+        # First visit: treat all continents as selected so toggles start checked.
+        initial_continents = list(default_continent_canonical)
+        initial_continent_codes = list(default_continent_codes)
 
     bound_get = request.GET or None
     home_filter_initial = {

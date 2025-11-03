@@ -146,10 +146,10 @@
             gap: 0.35rem;
         }
 
-        .checkbox-grid li {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .continent-toggle-grid {
+            display: grid;
+            gap: 0.35rem;
+            margin-top: 0.35rem;
         }
 
         .content form {
@@ -312,7 +312,21 @@
                     {% if home_filter_supports_continent and home_filter_form.continents.field.choices %}
                     <fieldset class="checkbox-fieldset">
                         <legend>{{ home_filter_form.continents.label }}</legend>
-                        {{ home_filter_form.continents }}
+                        {% with selected_codes=home_filter_selected_continent_codes %}
+                        <div class="continent-toggle-grid" role="group" aria-label="Filter by continent">
+                            {% for value, label in home_filter_form.continents.field.choices %}
+                            {% with input_id=home_filter_form.continents.id_for_label|add:"_"|add:forloop.counter0 %}
+                            <label class="toggle" for="{{ input_id }}">
+                                <input class="toggle-input" type="checkbox" name="{{ home_filter_form.continents.html_name }}" value="{{ value }}" id="{{ input_id }}" {% if value in selected_codes %}checked{% endif %} onchange="this.form.submit()">
+                                <span>{{ label }}</span>
+                            </label>
+                            {% endwith %}
+                            {% endfor %}
+                        </div>
+                        {% endwith %}
+                        {% if home_filter_form.continents.errors %}
+                        <p class="message error">{{ home_filter_form.continents.errors|join:", " }}</p>
+                        {% endif %}
                     </fieldset>
                     {% elif not home_filter_supports_continent %}
                     <p class="muted">Continent filter unavailable without regional data.</p>

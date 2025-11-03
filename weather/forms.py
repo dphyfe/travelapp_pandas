@@ -73,6 +73,11 @@ class HomeFilterForm(forms.Form):
                 field.widget.attrs["title"] = title
 
         continent_field = self.fields["continents"]
+        continent_field.widget = forms.CheckboxSelectMultiple(
+            attrs={
+                "class": "checkbox-grid",
+            }
+        )
         normalized_choices = []
         seen_values = set()
         for choice in continent_choices:
@@ -97,11 +102,6 @@ class HomeFilterForm(forms.Form):
             normalized_choices.append((value, label))
             seen_values.add(value)
         continent_field.choices = tuple(normalized_choices)
-        continent_field.widget = forms.CheckboxSelectMultiple(
-            attrs={
-                "class": "checkbox-grid",
-            }
-        )
         if not normalized_choices:
             continent_field.disabled = True
             continent_field.widget.attrs["title"] = "Continent data unavailable for these cities"
